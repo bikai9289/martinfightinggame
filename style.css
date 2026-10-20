@@ -230,3 +230,57 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
   *{transition:none!important}
   .btn:hover,.char-card:hover,.link-card:hover{transform:none}
 }
+
+/* ---------- 英雄区擂台图形 ---------- */
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  gap:44px;align-items:center}
+.hero-copy .lede{max-width:560px}
+.hero-art{justify-self:center;width:100%;max-width:470px}
+.arena{width:100%;height:auto;display:block;overflow:visible;
+  filter:drop-shadow(0 34px 48px rgba(0,0,0,.6))}
+.arena .f1{animation:bob 2.6s ease-in-out infinite}
+.arena .f2{animation:bob 3.2s ease-in-out .35s infinite}
+.arena .spark{transform-box:fill-box;transform-origin:center;opacity:0;
+  animation:spark 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes spark{0%,58%,100%{opacity:0;transform:scale(.55)}
+                 68%{opacity:1;transform:scale(1)}
+                 86%{opacity:0;transform:scale(1.25)}}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:26px}
+  .hero-art{max-width:400px}
+}
+@media(max-width:560px){.hero-art{max-width:320px}}
+@media(prefers-reduced-motion:reduce){
+  .arena .f1,.arena .f2,.arena .spark{animation:none}
+  .arena .spark{opacity:.9}
+}
+
+/* ---------- 宽度分层（追加到文件末尾） ---------- */
+:root{--maxw:1180px;--prose:760px}
+
+/* 正文容器放宽，不再被 .prose 锁死 */
+.wrap.prose{max-width:var(--maxw)}
+
+/* 纯文字块保持易读行长并居中 */
+.wrap.prose > section > :where(p,h2,h3,h4,ul,ol,dl,blockquote){
+  max-width:var(--prose);margin-inline:auto}
+
+/* 卡片 / 提示条 / 表格：中等宽度 */
+.wrap.prose > section > :where(.card,.note,table,.steps){
+  max-width:880px;margin-inline:auto}
+
+/* 结构性网格撑满容器 */
+.wrap.prose > section > :where(.char-grid,.links-grid,.mode){
+  max-width:none}
+
+/* 宽屏下让网格多排一列 */
+.char-grid{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.mode{grid-template-columns:repeat(2,1fr)}
+.mode-item:first-child:nth-last-child(5){grid-column:1/-1}
+
+@media(max-width:860px){
+  .mode{grid-template-columns:1fr}
+  .wrap.prose > section > *{max-width:none}
+}
+
